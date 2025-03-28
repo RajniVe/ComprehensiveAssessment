@@ -1,0 +1,76 @@
+package stepDefinitions;
+
+import io.cucumber.java.en.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class FlightBookingSteps {
+    WebDriver driver;
+
+    @Given("User launches the MakeMyTrip website")
+    public void launchMakeMyTrip() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://www.makemytrip.com/");
+    }
+
+    @When("User clicks on the Flights option")
+    public void clickFlights() throws InterruptedException {
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//span[text()='Flights']")).click();
+    }
+
+    @And("User selects ROUND TRIP option")
+    public void selectRoundTrip() throws InterruptedException {
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//li[@data-cy='roundTrip']")).click();
+    }
+
+    @And("User enters {string} as the From Location")
+    public void enterFromLocation(String from) throws InterruptedException {
+        Thread.sleep(2000);
+        WebElement fromInput = driver.findElement(By.xpath("//input[@id='fromCity']"));
+        fromInput.click();
+        WebElement fromTextBox = driver.findElement(By.xpath("//input[@placeholder='From']"));
+        fromTextBox.sendKeys(from);
+        Thread.sleep(1000);
+        fromTextBox.sendKeys(Keys.ENTER);
+    }
+
+    @And("User enters {string} as the To Location")
+    public void enterToLocation(String to) throws InterruptedException {
+        Thread.sleep(2000);
+        WebElement toInput = driver.findElement(By.xpath("//input[@id='toCity']"));
+        toInput.click();
+        WebElement toTextBox = driver.findElement(By.xpath("//input[@placeholder='To']"));
+        toTextBox.sendKeys(to);
+        Thread.sleep(1000);
+        toTextBox.sendKeys(Keys.ENTER);
+    }
+
+    @And("User selects Departure and Return dates")
+    public void selectDates() throws InterruptedException {
+        Thread.sleep(2000);
+        // Select a future departure date
+        driver.findElement(By.xpath("//div[@aria-label='Tue Apr 30 2024']")).click();
+        Thread.sleep(1000);
+        // Select a return date
+        driver.findElement(By.xpath("//div[@aria-label='Thu May 2 2024']")).click();
+    }
+
+    @And("User clicks on the Search button")
+    public void clickSearchButton() throws InterruptedException {
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//a[text()='Search']")).click();
+    }
+
+    @Then("Verify the search results page is displayed")
+    public void verifySearchResults() throws InterruptedException {
+        Thread.sleep(5000);
+        WebElement searchResults = driver.findElement(By.xpath("//div[contains(text(), 'Flights')]"));
+        assert searchResults.isDisplayed();
+        driver.quit();
+    }
+}

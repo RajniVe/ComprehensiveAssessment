@@ -1,0 +1,14 @@
+package com.comprehensive.com.assignment;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class TestWikipedia extends BaseTest {
+
+    @Test
+    public void verifyWikipediaHomePage() {
+        driver.get("https://www.wikipedia.org");
+        String title = driver.getTitle();
+        System.out.println("Wikipedia Home Page Title: " + title);
+        Assert.assertTrue(title.contains("Wikipedia"), "Wikipedia Title verification failed!");
+    }
+}

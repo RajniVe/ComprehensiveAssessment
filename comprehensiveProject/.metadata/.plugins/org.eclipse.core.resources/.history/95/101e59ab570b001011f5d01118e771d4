@@ -1,0 +1,38 @@
+package com.comprehensive.com.assignment;
+import io.restassured.RestAssured
+import io.restassured.response.Response
+import static io.restassured.RestAssured.given
+import static org.hamcrest.Matchers.equalTo
+
+class ReqResLoginTests {
+
+    static void main(String[] args) {
+        RestAssured.baseURI = "https://reqres.in/api"
+        
+        // ✅ Positive Case
+        Response response = given()
+            .header("Content-Type", "application/json")
+            .body('{"email": "eve.holt@reqres.in", "password": "cityslicka"}')
+        .when()
+            .post("/login")
+        .then()
+            .statusCode(200)
+            .body("token", equalTo("QpwL5tke4Pnpja7X4"))
+            .extract().response()
+        
+        println "✅ Positive Test Passed: " + response.asString()
+
+        // ❌ Negative Case (Missing Password)
+        Response response2 = given()
+            .header("Content-Type", "application/json")
+            .body('{"email": "eve.holt@reqres.in"}')
+        .when()
+            .post("/login")
+        .then()
+            .statusCode(400)
+            .body("error", equalTo("Missing password"))
+            .extract().response()
+        
+        println "❌ Negative Test Passed: " + response2.asString()
+    }
+}

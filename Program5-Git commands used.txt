@@ -1,0 +1,6 @@
+git init
+git add 
+git commit -m "all comprehensive project changes"
+git branch -b comprehensiveProject
+git remote add origin https://github.com/RajniVe/ComprehensiveAssessment.git
+git push -u origin comprehensiveProject

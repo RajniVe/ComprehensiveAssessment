@@ -1,0 +1,6 @@
+maven commands to run tests:-
+mvn test
+
+
+mvn clean install
+

@@ -1,0 +1,76 @@
+1.Post-positive
+
+-curl --location 'https://reqres.in/api/login' \
+--header 'Content-Type: application/ecmascript' \
+--data-raw '{
+    "email": "eve.holt@reqres.in",
+    "password": "cityslicka"
+}
+'
+
+Expected response:-{
+    "token": "QpwL5tke4Pnpja7X4"
+}
+
+Postman Test Script (Assertions in JavaScript)
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Response should contain token", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("token");
+});
+
+
+
+
+2. POST-negative testcase1
+curl --location 'https://reqres.in/api/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "eve.holt@reqres.in"
+}
+'
+
+
+expected response:-
+{
+    "error": "Missing password"
+}
+
+pm.test("Status code is 400", function () {
+    pm.response.to.have.status(400);
+});
+
+pm.test("Error message should indicate missing password", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.error).to.eql("Missing password");
+});
+
+
+
+
+
+3. Post negative testcase2
+curl --location 'https://reqres.in/api/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "invalid@email.com",
+    "password": "wrongpassword"
+}
+'
+expected response:-
+{
+    "error": "user not found"
+}
+
+Postman Test Script (Assertions in JavaScript)
+pm.test("Status code is 400", function () {
+    pm.response.to.have.status(400);
+});
+
+pm.test("Error message should indicate user not found", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.error).to.eql("user not found");
+});

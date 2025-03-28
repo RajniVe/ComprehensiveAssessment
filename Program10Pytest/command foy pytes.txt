@@ -1,0 +1,5 @@
+pip install selenium pytest webdriver-manager
+
+
+To run:-
+pytest test_makemytrip.py --html=report.html 

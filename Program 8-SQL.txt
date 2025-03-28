@@ -1,0 +1,33 @@
+1.Create Table using SQL DDL Command
+CREATE TABLE EMP_Data (
+    EMP_No INT PRIMARY KEY,
+    EMP_Name VARCHAR(100) NOT NULL,
+    EMP_Exp INT NOT NULL,
+    EMP_Department VARCHAR(100) NOT NULL,
+    EMP_Salary INT NOT NULL
+);
+
+2.Insert Data using SQL DML Commands
+INSERT INTO EMP_Data (EMP_No, EMP_Name, EMP_Exp, EMP_Department, EMP_Salary) VALUES
+(101, 'John Doe', 5, 'IT', 70000),
+(102, 'Jane Smith', 3, 'HR', 60000),
+(103, 'Michael Brown', 8, 'IT', 90000),
+(104, 'Emily Davis', 6, 'Finance', 75000),
+(105, 'Robert Wilson', 4, 'IT', 68000),
+(106, 'Sarah Johnson', 2, 'HR', 55000),
+(107, 'David Miller', 7, 'Finance', 80000),
+(108, 'Laura White', 5, 'IT', 72000);
+
+
+3.Query to Fetch Employees Working in the Same Department
+SELECT *
+FROM EMP_Data
+WHERE EMP_Department IN (
+    SELECT EMP_Department
+    FROM EMP_Data
+    GROUP BY EMP_Department
+    HAVING COUNT(*) > 1
+)
+ORDER BY EMP_Department, EMP_No;
+
+

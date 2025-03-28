@@ -1,0 +1,63 @@
+import time
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys
+
+@pytest.fixture
+def setup():
+    """ Setup WebDriver before each test and quit after test """
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    driver.maximize_window()
+    yield driver
+    driver.quit()
+
+def test_search_round_trip_flight(setup):
+    driver = setup
+    driver.get("https://www.makemytrip.com/")
+
+    # Close popup if exists
+    time.sleep(3)
+    try:
+        driver.find_element(By.CSS_SELECTOR, "span.langCardClose").click()
+    except:
+        pass
+
+
+    driver.find_element(By.XPATH, "//span[text()='Flights']").click()
+    time.sleep(2)
+
+   
+    driver.find_element(By.XPATH, "//li[text()='Round Trip']").click()
+
+   
+    from_input = driver.find_element(By.XPATH, "//input[@id='fromCity']")
+    from_input.click()
+    from_input.send_keys("Hyderabad")
+    time.sleep(2)
+    from_input.send_keys(Keys.ENTER)
+
+   
+    to_input = driver.find_element(By.XPATH, "//input[@id='toCity']")
+    to_input.click()
+    to_input.send_keys("Chennai")
+    time.sleep(2)
+    to_input.send_keys(Keys.ENTER)
+
+   
+    driver.find_element(By.XPATH, "//span[text()='DEPARTURE']").click()
+    driver.find_element(By.XPATH, "//div[@aria-label='Thu Apr 25 2024']").click()  # Adjust date as needed
+
+
+    driver.find_element(By.XPATH, "//span[text()='RETURN']").click()
+    driver.find_element(By.XPATH, "//div[@aria-label='Sat Apr 27 2024']").click()  # Adjust date as needed
+
+
+    driver.find_element(By.XPATH, "//a[text()='Search']").click()
+    time.sleep(5)
+
+    
+    assert "flights" in driver.current_url.lower(), "Flight search page did not load as expected."
+
