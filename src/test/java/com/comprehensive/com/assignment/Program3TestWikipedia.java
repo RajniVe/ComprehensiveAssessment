@@ -1,0 +1,18 @@
+package com.comprehensive.com.assignment;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+
+
+public class Program3TestWikipedia extends Program3And4BaseTest {
+
+    @Test
+    public void verifyWikipediaHomePage() {
+        driver.get("https://www.wikipedia.org");
+        String title = driver.getTitle();
+        System.out.println("Wikipedia Home Page Title: " + title);
+        Assert.assertTrue(title.contains("Wikipedia"), "Wikipedia Title verification failed!");
+    }
+}

@@ -1,0 +1,73 @@
+package com.comprehensive.com.assignment;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.time.Duration;
+public class Program1 
+{
+
+
+	    public static void main(String[] args) {
+	       
+	        System.setProperty("webdriver.chrome.driver", "c://chromedriver");
+
+	        
+	        WebDriver driver = new ChromeDriver();
+	        driver.manage().window().maximize();
+
+	        
+	        driver.get("https://www.makemytrip.com/");
+
+	        
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+	        
+	        try {
+	            WebElement closePopup = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".autopop__wrap .loginModal")));
+	            closePopup.click();
+	        } catch (Exception ignored) {}
+
+	        
+	        driver.findElement(By.xpath("//span[text()='Flights']")).click();
+
+	        
+	        driver.findElement(By.xpath("//li[text()='Round Trip']")).click();
+
+	        
+	        WebElement fromCity = driver.findElement(By.id("fromCity"));
+	        fromCity.click();
+	        WebElement fromInput = driver.findElement(By.xpath("//input[@placeholder='From']"));
+	        fromInput.sendKeys("HYD");
+	        driver.findElement(By.xpath("//p[contains(text(),'Hyderabad, India')]")).click();
+
+	       
+	        WebElement toCity = driver.findElement(By.id("toCity"));
+	        toCity.click();
+	        WebElement toInput = driver.findElement(By.xpath("//input[@placeholder='To']"));
+	        toInput.sendKeys("MAA");
+	        driver.findElement(By.xpath("//p[contains(text(),'Chennai, India')]")).click();
+
+	        
+	        driver.findElement(By.xpath("//label[@for='departure']")).click();
+	        driver.findElement(By.xpath("//div[@aria-label='Thu Apr 25 2024']")).click();  
+
+	        
+	        driver.findElement(By.xpath("//label[@for='return']")).click();
+	        driver.findElement(By.xpath("//div[@aria-label='Tue Apr 30 2024']")).click();  
+	        
+	        driver.findElement(By.xpath("//a[text()='Search']")).click();
+
+	        
+	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Flights from')]")));
+	        System.out.println("Flight search results are displayed successfully!");
+
+	       
+	        driver.quit();
+	    }
+	}
+
+}

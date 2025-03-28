@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Selenium Test Suite">
+    <test name="Test Google and Wikipedia">
+        <classes>
+            <class name="Program3And4TestPageTitle"/>
+            <class name="Program3TestGoogleSearch"/>
+            <class name="Program3TestWikipedia"/>
+        </classes>
+    </test>
+</suite>

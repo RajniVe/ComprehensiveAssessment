@@ -1,0 +1,19 @@
+package com.comprehensive.com.assignment;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class Program3And4TestPageTitle extends Program3And4BaseTest {
+
+    @Test
+    public void verifyGoogleTitle() {
+        driver.get("https://www.google.com");
+        String title = driver.getTitle();
+        System.out.println("Page Title: " + title);
+        Assert.assertTrue(title.contains("Google"), "Title verification failed!");
+    }
+}

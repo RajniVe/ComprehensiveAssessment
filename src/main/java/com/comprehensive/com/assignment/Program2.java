@@ -1,0 +1,74 @@
+package com.comprehensive.com.assignment;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.time.Duration;
+
+public class Program2 {
+    public static void main(String[] args) throws InterruptedException {
+       
+        System.setProperty("webdriver.chrome.driver", "c://chromedriver");
+        
+        
+        WebDriver driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+        
+        
+        driver.get("https://www.makemytrip.com/");
+        
+        
+        try {
+            WebElement closePopup = driver.findElement(By.cssSelector(".makeFlex .loginModal")).findElement(By.tagName("span"));
+            closePopup.click();
+        } catch (Exception e) {
+            System.out.println("No login popup detected");
+        }
+        
+        
+        driver.findElement(By.xpath("//li[@data-cy='menu_Flights']")).click();
+        
+        
+        driver.findElement(By.xpath("//li[@data-cy='roundTrip']")).click();
+        
+        
+        WebElement fromInput = driver.findElement(By.id("fromCity"));
+        fromInput.click();
+        WebElement fromSearchBox = driver.findElement(By.xpath("//input[@placeholder='From']"));
+        fromSearchBox.sendKeys("HYD");
+        Thread.sleep(2000);
+        fromSearchBox.sendKeys(Keys.ENTER);
+        
+        
+        WebElement toInput = driver.findElement(By.id("toCity"));
+        toInput.click();
+        WebElement toSearchBox = driver.findElement(By.xpath("//input[@placeholder='To']"));
+        toSearchBox.sendKeys("MAA");
+        Thread.sleep(2000);
+        toSearchBox.sendKeys(Keys.ENTER);
+        
+        
+        driver.findElement(By.xpath("//label[@for='departure']")).click();
+        driver.findElement(By.xpath("(//div[@aria-label='Choose Friday, April 5th, 2024'])[1]")).click();
+        
+        
+        driver.findElement(By.xpath("//label[@for='return']")).click();
+        driver.findElement(By.xpath("(//div[@aria-label='Choose Wednesday, April 10th, 2024'])[1]")).click();
+        
+        
+        driver.findElement(By.xpath("//a[text()='Search']")).click();
+        
+        
+        Thread.sleep(5000); 
+        if (driver.getTitle().contains("Flight Booking")) {
+            System.out.println("Flight search page displayed successfully");
+        } else {
+            System.out.println("Flight search page not displayed");
+        }
+        
+        
+        driver.quit();
+    }
+}
